@@ -13,7 +13,7 @@ class ContactService {
             phone: payload.phone,
             favorite: payload.favorite,
         };
-        
+         
         // remove undefined fields
         Object.keys(contact).forEach(
             (key) => contact[key] === undefined && delete contact[key]
@@ -23,33 +23,31 @@ class ContactService {
 
     async create(payload) {
         
-        const contact = this.extractContactData(payload);
-        
+        const contact = this.extractContactData(payload);        
         const result = await this.Contact.findOneAndUpdate(
             contact,
             { $set: { favorite: contact.favorite === true } },
             { returnDocument: "after", upsert: true }
         );
-        return result.value;
-    
-  }
-  async find(filter) {
-    const cursor = await this.Contact.find(filter);
-    return await cursor.toArray();
-}
-
-async findByName(name) {
-    return await this.find({
-        name: { $regex: new RegExp(name), $options: "i" },
-    });
-}
-async findById(id) {
-    return await this.Contact.findOne({
-    _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
-    });
+        return result.value;    
+     }
+    async find(filter) {
+        const cursor = await this.Contact.find(filter);
+         return await cursor.toArray();
     }
 
-async update(id, payload) {
+    async findByName(name) {
+        return await this.find({
+         name: { $regex: new RegExp(name), $options: "i" },
+    });
+    }
+    async findById(id) {
+        return await this.Contact.findOne({
+        _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
+        });
+    }
+
+    async update(id, payload) {
         const filter = {
             _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
         };
@@ -76,6 +74,7 @@ async update(id, payload) {
     async findFavorite() {
         return await this.find({ favorite: true });
     }
-} 
+}
+
 
 module.exports = ContactService;

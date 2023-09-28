@@ -9,21 +9,21 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use("/api/contacts", contactsRouter);
 app.get("/", (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
+    // res.header("Access-Control-Allow-Origin", "*");
     res.json({ message: "Welcome to contact book application."});
 });
+app.use("/api/contacts", contactsRouter);
 // handle 404 response
-// app.use((req, res, next) => {
-//     return next(new ApiError(404, "Resource not found"));
-// });
+app.use((req, res, next) => {
+    return next(new ApiError(404, "Resource not found"));
+});
 
-// app.use((err, req, res, next) => {
-//     return res.status(console.err.statusCode || 500).json({
-//         message: err.message || "Internal Server Error",
-//     });
-// });
+app.use((err, req, res, next) => {
+    return res.status(error.statusCode || 500).json({
+        message: error.message || "Internal Server Error",
+    });
+});
 
 
 module.exports = app;

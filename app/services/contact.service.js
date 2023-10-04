@@ -15,7 +15,7 @@ class ContactService {
         };
          
         // remove undefined fields
-        Object.keys(contact).forEach(
+        Objects.keys(contact).forEach(
             (key) => contact[key] === undefined && delete contact[key]
         );
         return contact;

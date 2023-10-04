@@ -16,10 +16,11 @@ exports.create = async (req, res, next) => {
             new ApiError(500, "An error occurred while creating the contact")
         );
     }
+    console.log
 };
 
 // Retrieve all contacts of a user from the database
-exports.findALL = async(req, res, next) => {
+exports.findAll = async(req, res, next) => {
     let documents = [];
 
     try{
@@ -92,7 +93,7 @@ exports.delete = async(req, res, next) => {
 };
 
 // Find all favarite contacts of a user
-exports.deleteALL = async(_req, res, next) => {
+exports.deleteAll = async(_req, res, next) => {
     try{
         const contactService = new ContactService(MongoDB.client);
         const document = await contactService.deleteALL();
@@ -105,7 +106,7 @@ exports.deleteALL = async(_req, res, next) => {
 };
 
 // Delete all contatcs of a user from the database
-exports.findALLFavorite = async(_req, res, next) => {
+exports.findAllFavorite = async(_req, res, next) => {
     try{
         const contactService = new ContactService(MongoDB.client);
         const document = await contactService.findFavorite();
